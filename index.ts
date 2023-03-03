@@ -8,8 +8,8 @@ await file("data/chars.csv")
       .trim()
       .split("\n")
       .map((line) => {
-        const [char, copy, favs] = line.split(",")
-        return { char, copy, favs: parseInt(favs) }
+        const [char, copy, favs, id] = line.split(",")
+        return { char, copy, favs: parseInt(favs), id: parseInt(id) }
       })
   })
 console.log(`loaded ${data.length} chars`)
