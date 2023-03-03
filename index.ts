@@ -19,10 +19,10 @@ serve({
   async fetch(req: Request) {
     const path = new URL(req.url).pathname
 
-    // /img/:char
+    // /img/:id
     if (path.startsWith("/img/")) {
-      const char = path.slice(5)
-      return new Response(file(`data/img/${char}.webp`))
+      const id = path.slice(5)
+      return new Response(file(`data/img/${id}.webp`))
     }
 
     // /chars/:current
