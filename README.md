@@ -1,4 +1,4 @@
-# bunny
+# murrorless-server
 
 To install dependencies:
 

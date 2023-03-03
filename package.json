@@ -1,5 +1,5 @@
 {
-  "name": "bunny",
+  "name": "murrorless-server",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
