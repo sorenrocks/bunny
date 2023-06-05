@@ -1,5 +1,10 @@
 import { serve, file } from "bun"
 
+const withCors = (res: Response) => {
+  res.headers.set("access-control-allow-origin", "*")
+  return res
+}
+
 let data: { char: string; copy: string; favs: number }[] = []
 await file("data/chars.csv")
   .text()
@@ -13,6 +18,17 @@ await file("data/chars.csv")
       })
   })
 console.log(`loaded ${data.length} chars`)
+
+let info: { updated: Date; count: number }
+await file("data/info.json")
+  .json()
+  .then(
+    (json) =>
+      (info = {
+        updated: new Date(json.updated),
+        count: data.length,
+      }),
+  )
 
 serve({
   port: 3001,
@@ -33,7 +49,7 @@ serve({
       const used = new Set()
       if (current) used.add(data.findIndex((c) => c.char === current))
 
-      while (chars.length < 10) {
+      while (chars.length < 20) {
         const idx = Math.floor(Math.random() * data.length)
         if (!used.has(idx)) {
           used.add(idx)
@@ -41,7 +57,12 @@ serve({
         }
       }
 
-      return new Response(JSON.stringify(chars))
+      return withCors(new Response(JSON.stringify(chars)))
+    }
+
+    // /info
+    if (path === "/info") {
+      return withCors(new Response(JSON.stringify(info)))
     }
 
     return new Response("not found", { status: 404 })
