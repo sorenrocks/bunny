@@ -31,7 +31,7 @@ await file("data/info.json")
   )
 
 serve({
-  port: 3001,
+  port: 3000,
   async fetch(req: Request) {
     const path = new URL(req.url).pathname
 
